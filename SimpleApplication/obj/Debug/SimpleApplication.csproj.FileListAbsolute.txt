@@ -1,0 +1,7 @@
+C:\Users\okhalij\source\repos\SimpleApplication\SimpleApplication\bin\Debug\SimpleApplication.exe.config
+C:\Users\okhalij\source\repos\SimpleApplication\SimpleApplication\bin\Debug\SimpleApplication.exe
+C:\Users\okhalij\source\repos\SimpleApplication\SimpleApplication\bin\Debug\SimpleApplication.pdb
+C:\Users\okhalij\source\repos\SimpleApplication\SimpleApplication\obj\Debug\SimpleApplication.csproj.AssemblyReference.cache
+C:\Users\okhalij\source\repos\SimpleApplication\SimpleApplication\obj\Debug\SimpleApplication.csproj.CoreCompileInputs.cache
+C:\Users\okhalij\source\repos\SimpleApplication\SimpleApplication\obj\Debug\SimpleApplication.exe
+C:\Users\okhalij\source\repos\SimpleApplication\SimpleApplication\obj\Debug\SimpleApplication.pdb
