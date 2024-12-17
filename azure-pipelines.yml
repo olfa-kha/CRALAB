@@ -1,0 +1,59 @@
+trigger:
+  branches:
+    include:
+      - main  
+
+pool:
+  vmImage: 'windows-latest' 
+
+variables:
+  vmIPAddress: '172.16.0.5'  
+  vmUsername: 'okhalij'    
+  vmPassword: '@thingswyillbeok123'   
+  deploymentFolder: 'C:\\DeploymentFolder'        
+
+steps:
+  # Restore Dependencies
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore Dependencies'
+    inputs:
+      command: 'restore'
+      projects: '**/*.csproj'
+
+  # Build Application
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Application'
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+
+  # Publish Application
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Application'
+    inputs:
+      command: 'publish'
+      projects: '**/*.csproj'
+      arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+
+  # Copy Files to Virtual Machine
+  - task: WindowsMachineFileCopy@2
+    displayName: 'Copy Files to Windows Virtual Machine'
+    inputs:
+      SourcePath: '$(Build.ArtifactStagingDirectory)'
+      TargetPath: '$(deploymentFolder)'
+      MachineName: '$(vmIPAddress)'
+      AdminUserName: '$(vmUsername)'
+      AdminPassword: '$(vmPassword)' # Use a secure pipeline variable for sensitive info
+      CleanTargetBeforeCopy: true
+
+  # Run Deployment Commands on Windows Virtual Machine
+  - task: PowerShellOnTargetMachines@3
+    displayName: 'Deploy Application on Windows Virtual Machine'
+    inputs:
+      Machines: '$(vmIPAddress)'
+      AdminUserName: '$(vmUsername)'
+      AdminPassword: '$(vmPassword)' # Use a secure pipeline variable for sensitive info
+      ScriptInline: |
+        cd $(deploymentFolder)
+        # Example: Start the .NET application
+        dotnet MyApp.dll
